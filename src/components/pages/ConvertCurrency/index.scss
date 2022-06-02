@@ -1,0 +1,17 @@
+.convert-currency-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__wrapper {
+    text-align: center;
+    min-width: 200px;
+    width: 30%;
+    margin-bottom: 20px;
+  }
+
+  &__alert {
+    margin-top: 10px;
+  }
+}

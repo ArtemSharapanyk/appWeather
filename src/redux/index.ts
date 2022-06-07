@@ -1,13 +1,17 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import currency from "./slices/currency";
+import cities from "./slices/cities";
 
 const rootReducer = combineReducers({
-  currency,
+  cities,
 });
 
 const setupStore = () =>
   configureStore({
     reducer: rootReducer,
+    middleware: (getMiddleware) =>
+      getMiddleware({
+        serializableCheck: false,
+      }),
   });
 
 export type RootStateType = ReturnType<typeof rootReducer>;

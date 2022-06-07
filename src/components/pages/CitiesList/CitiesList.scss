@@ -1,0 +1,10 @@
+.page-cities-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+
+  .city-card {
+    margin-right: 15px;
+    margin-top: 10px;
+  }
+}

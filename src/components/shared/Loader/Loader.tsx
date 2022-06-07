@@ -1,20 +1,19 @@
 /* eslint-disable react/function-component-definition */
-
-import { CircularProgress } from "@mui/material";
+import { Spin } from "antd";
 import React, { FC } from "react";
 
-interface LoaderProps {
+interface Props {
   isLoading: boolean;
 }
 
-export const Loader: FC<LoaderProps> = ({ isLoading }) => {
+export const Loader: FC<Props> = ({ isLoading }) => {
   if (!isLoading) return null;
 
   return (
     <div className="loader">
-      <CircularProgress />
+      <div className="loader__block">
+        <Spin size="large" />
+      </div>
     </div>
   );
 };
-
-export default Loader;

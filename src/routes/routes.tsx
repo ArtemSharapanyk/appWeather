@@ -1,46 +1,46 @@
-import React, { ReactElement, lazy } from "react";
+import React, { lazy } from "react";
+import { AppRoutesInterface } from "../interfaces/routes";
 
-interface AppRoutesInterface {
-  component: ReactElement;
-  name: string;
-  route: string;
-  closed?: boolean;
-}
+const AddCity = lazy(() => import("../components/pages/AddCity/AddCity"));
 
-const ConvertCurrency = lazy(
-  () => import("../components/pages/ConvertCurrency/ConvertCurrency"),
+const CitiesList = lazy(
+  () => import("../components/pages/CitiesList/CitiesList"),
 );
-const ExchangeRate = lazy(
-  () => import("../components/pages/ExchangeRate/ExchangeRate"),
-);
-const SetBaseCurrency = lazy(
-  () => import("../components/pages/SetBaseCurrency/SetBaseCurrency"),
+const DetailCity = lazy(
+  () => import("../components/pages/DetailCity/DetailCity"),
 );
 
 export const appRoutesLinks = {
-  EXCHANGE_RATE: "/exchange_rates",
-  CONVERT_CURRENCY: "/convert_currency",
-  SET_BASE_CURRENCY: "/set_base_currency",
+  ADD_CITY: "/add_city",
+  CITIES_LIST: "/cities_list",
+  DETAIL_CITY: "/cities/:name",
 };
 
 const appRoutes: AppRoutesInterface[] = [
   {
-    component: <ExchangeRate />,
-    name: "Exchange rate",
-    route: appRoutesLinks.EXCHANGE_RATE,
-    closed: true,
+    component: <AddCity />,
+    name: "Add city",
+    route: appRoutesLinks.ADD_CITY,
+    closed: false,
+    isInNavigation: true,
   },
   {
-    component: <ConvertCurrency />,
-    name: "Conver currency",
-    route: appRoutesLinks.CONVERT_CURRENCY,
+    component: <CitiesList />,
+    name: "Weather info by your prefered list of cities",
+    route: appRoutesLinks.CITIES_LIST,
     closed: true,
+    isInNavigation: true,
   },
   {
-    component: <SetBaseCurrency />,
-    name: "Set base currency",
-    route: appRoutesLinks.SET_BASE_CURRENCY,
+    component: <DetailCity />,
+    name: "Detail info",
+    route: appRoutesLinks.DETAIL_CITY,
+    closed: true,
+    isInNavigation: false,
   },
 ];
+
+export const privateRoutes = appRoutes.filter((route) => route.closed);
+export const publicRoutes = appRoutes.filter((route) => !route.closed);
 
 export default appRoutes;

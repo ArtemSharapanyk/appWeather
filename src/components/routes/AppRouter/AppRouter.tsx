@@ -1,65 +1,64 @@
-import { Container } from "@mui/material";
-import React, { useEffect, Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Layout } from "antd";
+import React, { Suspense, useEffect } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { mapRoutes } from "../../../helpers/routes";
 import { useAppDispatch, useTypedSelector } from "../../../hooks/redux";
-import { currencySlice } from "../../../redux/slices/currency";
-import appRoutes, { appRoutesLinks } from "../../../routes/routes";
-import CurrencyService from "../../../services/CurrencyService";
-import Loader from "../../shared/Loader/Loader";
+import { citiesSlice } from "../../../redux/slices/cities";
+import appRoutes, {
+  appRoutesLinks,
+  publicRoutes,
+} from "../../../routes/routes";
+import { CitiesService } from "../../../services/CitiesServices";
+import { Loader } from "../../shared/Loader/Loader";
+// import { CitiesService } from "../../../services/CitiesServices";
 
-export default function AppRouter() {
-  const { baseCurrency, isLoading } = useTypedSelector(
-    (state) => state.currency,
+const { Content } = Layout;
+
+const { setIsCitiesExacts } = citiesSlice.actions;
+
+export function AppRouter() {
+  const dispatch = useAppDispatch();
+  const { isCitiesExacts, isLoading } = useTypedSelector(
+    (state) => state.cities,
   );
 
-  const { setBaseCurrency } = currencySlice.actions;
-  const baseCurrencyStored = CurrencyService.getBaseCurrency();
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
-    if (baseCurrencyStored) {
-      dispatch(setBaseCurrency(baseCurrencyStored));
+    const cashedCities = CitiesService.getCities();
+
+    if (cashedCities) {
+      dispatch(setIsCitiesExacts());
     }
   }, []);
 
   return (
-    <Container className="pages-wrapper">
+    <Content
+      className="site-layout-background"
+      style={{
+        margin: "24px 16px",
+        padding: 24,
+        minHeight: 280,
+      }}
+    >
       <Loader isLoading={isLoading} />
       <Suspense fallback={<Loader isLoading />}>
-        {!baseCurrency ? (
+        {isCitiesExacts ? (
           <Routes>
-            {appRoutes.map((route) => {
-              return route.closed ? null : (
-                <Route
-                  path={route.route}
-                  key={`${route.name}_route`}
-                  element={route.component}
-                />
-              );
-            })}
+            {mapRoutes(appRoutes)}
             <Route
               path="*"
-              element={
-                <Navigate to={appRoutesLinks.SET_BASE_CURRENCY} replace />
-              }
+              element={<Navigate to={appRoutesLinks.CITIES_LIST} />}
             />
           </Routes>
         ) : (
           <Routes>
-            {appRoutes.map((route) => (
-              <Route
-                path={route.route}
-                key={`${route.name}_route`}
-                element={route.component}
-              />
-            ))}
+            {mapRoutes(publicRoutes)}
             <Route
               path="*"
-              element={<Navigate to={appRoutesLinks.EXCHANGE_RATE} replace />}
+              element={<Navigate to={appRoutesLinks.ADD_CITY} />}
             />
           </Routes>
         )}
       </Suspense>
-    </Container>
+    </Content>
   );
 }

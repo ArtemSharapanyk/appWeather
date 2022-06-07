@@ -1,19 +1,14 @@
 import axios from "axios";
 
-const API_LINK = "https://api.apilayer.com/fixer/";
-const API_KEY = "1q8B9EGasgW4afEfwcZW1jpqlRVXXT1w";
+const API_LINK = "https://api.openweathermap.org/data/2.5/";
+export const API_KEY = "8881f58760ac61bf022239ef6be06efa";
 
 export const endpoints = {
-  convert: "convert",
-  latestExchangeRates: "latest",
-  allCurrency: "symbols",
+  weather: "weather",
 };
 
 const $api = axios.create({
   baseURL: API_LINK,
-  headers: {
-    apiKey: API_KEY,
-  },
 });
 
 export default $api;

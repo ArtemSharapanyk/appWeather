@@ -1,0 +1,30 @@
+export const mockValue = (name: string = "London") => ({
+  coord: { lon: -0.1257, lat: 51.5085 },
+  weather: [
+    { id: 803, main: "Clouds", description: "broken clouds", icon: "04d" },
+  ],
+  base: "stations",
+  main: {
+    temp: 292.7,
+    feels_like: 292.38,
+    temp_min: 290.93,
+    temp_max: 294.29,
+    pressure: 1005,
+    humidity: 64,
+  },
+  visibility: 10000,
+  wind: { speed: 6.17, deg: 240 },
+  clouds: { all: 75 },
+  dt: 1654685892,
+  sys: {
+    type: 2,
+    id: 2019646,
+    country: "GB",
+    sunrise: 1654659890,
+    sunset: 1654719269,
+  },
+  timezone: 3600,
+  id: 2643743,
+  name,
+  cod: 200,
+});
